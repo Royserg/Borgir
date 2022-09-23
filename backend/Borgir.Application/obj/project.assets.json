@@ -1,0 +1,89 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "Borgir.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Borgir.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Borgir.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Borgir.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Borgir.Domain/Borgir.Domain.csproj",
+      "msbuildProject": "../Borgir.Domain/Borgir.Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Borgir.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/Users/jakub/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/jakub/Desktop/code/projects/Borgir/backend/Borgir.Application/Borgir.Application.csproj",
+      "projectName": "Borgir.Application",
+      "projectPath": "/Users/jakub/Desktop/code/projects/Borgir/backend/Borgir.Application/Borgir.Application.csproj",
+      "packagesPath": "/Users/jakub/.nuget/packages/",
+      "outputPath": "/Users/jakub/Desktop/code/projects/Borgir/backend/Borgir.Application/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/jakub/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "/Users/jakub/Desktop/code/projects/Borgir/backend/Borgir.Domain/Borgir.Domain.csproj": {
+              "projectPath": "/Users/jakub/Desktop/code/projects/Borgir/backend/Borgir.Domain/Borgir.Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.401/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

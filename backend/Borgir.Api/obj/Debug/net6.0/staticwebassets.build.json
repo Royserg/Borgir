@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Vn9XFeti3MWhxfCKC9i1vmBmic0gYgJ5jUws7PjqH+I=",
+  "Source": "Borgir.Api",
+  "BasePath": "_content/Borgir.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
