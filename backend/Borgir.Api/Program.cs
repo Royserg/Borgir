@@ -1,5 +1,7 @@
 using Borgir.Application;
 using Borgir.Infrastructure;
+using Borgir.Infrastructure.EF.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddApplication()
         .AddInfrastructure();
+
+    builder.Services.AddDbContext<DatabaseContext>(ctx => ctx.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+
 
     builder.Services.AddControllers();
 }
