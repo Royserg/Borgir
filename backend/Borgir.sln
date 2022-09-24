@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borgir.Api", "Borgir.Api\Bo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borgir.Application", "Borgir.Application\Borgir.Application.csproj", "{25D88D28-B3B6-4AF8-95A0-E81ED29C06BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borgir.Contracts", "Borgir.Contracts\Borgir.Contracts.csproj", "{A0DE661D-6DA3-41A2-9830-EF7A0F6B7E61}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borgir.Domain", "Borgir.Domain\Borgir.Domain.csproj", "{DBB6225F-28D0-4F34-AB6E-F267B996D919}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borgir.Infrastructure", "Borgir.Infrastructure\Borgir.Infrastructure.csproj", "{841C5C00-F42B-472D-93ED-26C3F6397780}"

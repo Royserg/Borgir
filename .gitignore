@@ -8,12 +8,10 @@ Release/
 
 Borgir.Api/bin
 Borgir.Appplication/bin
-Borgir.Contracts/bin
 Borgir.Domain/bin
 Borgir.Infrastructure/bin
 
 Borgir.Api/obj
 Borgir.Appplication/obj
-Borgir.Contracts/obj
 Borgir.Domain/obj
 Borgir.Infrastructure/obj
