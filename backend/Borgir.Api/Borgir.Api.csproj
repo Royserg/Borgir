@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Borgir.Contracts\Borgir.Contracts.csproj" />
     <ProjectReference Include="..\Borgir.Application\Borgir.Application.csproj" />
     <ProjectReference Include="..\Borgir.Infrastructure\Borgir.Infrastructure.csproj" />
   </ItemGroup>
