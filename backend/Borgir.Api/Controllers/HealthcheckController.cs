@@ -6,7 +6,7 @@ namespace Borgir.Api.Controllers;
 [Route("hp")]
 public class HealthcheckController : ControllerBase
 {
-    [HttpGet(Name = "GetHealthcheck")]
+    [HttpGet]
     public IActionResult Get()
     {
         return Ok();
