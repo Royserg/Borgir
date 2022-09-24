@@ -1,5 +1,4 @@
 using Borgir.Application.Services.Restaurant;
-using Borgir.Infrastructure.EF.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Borgir.Api.Controllers;
