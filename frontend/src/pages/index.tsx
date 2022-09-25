@@ -1,19 +1,45 @@
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { GiHamburger } from 'react-icons/gi';
+import { RiEmotionSadLine } from 'react-icons/ri';
+import { RestaurantCard } from '../components/restaurantCard';
+import { useDebounce } from '../hooks/useDebounce';
 import { getUserCity } from '../services/geolocation';
-import { debounce } from 'lodash';
+import { getRestaurants } from '../services/restaurants';
+import { IGetRestaurants, IRestaurant } from '../shared/interfaces/restaurant';
 
 const Home: NextPage = () => {
-  // const [searchValue, setSearchValue] = useState('');
-  const inputRef = useRef(null);
+  const [results, setResults] = useState<{ items: IRestaurant[] }>();
+  const { isLoading, isError, isFetching, error, refetch } = useQuery<
+    IGetRestaurants,
+    AxiosError
+  >(
+    ['restaurants'],
+    async () => {
+      const data = await getRestaurants(searchTerm);
+      setResults(data);
+      return data;
+    },
+    { enabled: false }
+  );
 
-  const fetchRestaurants = (search: string) => {
-    console.log('SEARCH STRING??', search);
-  };
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Get user city
+  // Effect for API call
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      refetch();
+    } else {
+      setResults({ items: [] });
+    }
+  }, [debouncedSearchTerm]);
+
+  // Effect for getting user city
   useEffect(() => {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -23,7 +49,7 @@ const Home: NextPage = () => {
 
         const city = await getUserCity({ latitude, longitude });
         if (city) {
-          fetchRestaurants(city);
+          setSearchTerm(city);
           if (inputRef) {
             // @ts-ignore
             inputRef.current.value = city;
@@ -35,18 +61,8 @@ const Home: NextPage = () => {
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
-    fetchRestaurants(searchValue);
+    setSearchTerm(searchValue);
   };
-
-  const debouncedSearchChange = useMemo(() => {
-    return debounce(handleSearchChange, 300);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      debouncedSearchChange.cancel();
-    };
-  });
 
   return (
     <>
@@ -69,72 +85,39 @@ const Home: NextPage = () => {
             ref={inputRef}
             type='text'
             placeholder='Type city, country or restaurant name'
-            onChange={debouncedSearchChange}
+            onChange={handleSearchChange}
           />
         </div>
 
-        {/* <div className='grid gap-3 pt-3 mt-3 text-center md:grid-cols-3 lg:w-2/3'>
-          <RestaurantCard
-            name='NextJS'
-            description='The React framework for production'
-            documentation='https://nextjs.org/'
-          />
-          <RestaurantCard
-            name='TypeScript'
-            description='Strongly typed programming language that builds on JavaScript, giving you better tooling at any scale'
-            documentation='https://www.typescriptlang.org/'
-          />
-          <RestaurantCard
-            name='TailwindCSS'
-            description='Rapidly build modern websites without ever leaving your HTML'
-            documentation='https://tailwindcss.com/'
-          />
-          <RestaurantCard
-            name='tRPC'
-            description='End-to-end typesafe APIs made easy'
-            documentation='https://trpc.io/'
-          />
-          <RestaurantCard
-            name='Next-Auth'
-            description='Authentication for Next.js'
-            documentation='https://next-auth.js.org/'
-          />
-          <RestaurantCard
-            name='Prisma'
-            description='Build data-driven JavaScript & TypeScript apps in less time'
-            documentation='https://www.prisma.io/docs/'
-          />
-        </div> */}
+        {/* Divider */}
+        <div className='mb-3'></div>
+
+        {results ? (
+          <>
+            {results.items?.length === 0 && searchTerm ? (
+              <h3 className='text-2xl mt-10 text-center w-1/2'>
+                <RiEmotionSadLine className='text-5xl mx-auto' />
+                <br />
+                No restaurants registered in the system for this search term
+              </h3>
+            ) : (
+              <ul>
+                {results.items.map((restaurant) => (
+                  <RestaurantCard key={restaurant.id} data={restaurant} />
+                ))}
+              </ul>
+            )}
+          </>
+        ) : isError ? (
+          <span>Error: {error.message}</span>
+        ) : isLoading && !isFetching ? (
+          <span>Not ready ...</span>
+        ) : (
+          <span>Loading...</span>
+        )}
       </main>
     </>
   );
 };
 
 export default Home;
-
-type RestaurantCardProps = {
-  name: string;
-  description: string;
-  documentation: string;
-};
-
-const RestaurantCard = ({
-  name,
-  description,
-  documentation,
-}: RestaurantCardProps) => {
-  return (
-    <section className='flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded shadow-xl motion-safe:hover:scale-105'>
-      <h2 className='text-lg text-gray-700'>{name}</h2>
-      <p className='text-sm text-gray-600'>{description}</p>
-      <a
-        className='mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2'
-        href={documentation}
-        target='_blank'
-        rel='noreferrer'
-      >
-        Documentation
-      </a>
-    </section>
-  );
-};
