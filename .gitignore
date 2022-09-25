@@ -15,3 +15,5 @@ Borgir.Api/obj
 Borgir.Appplication/obj
 Borgir.Domain/obj
 Borgir.Infrastructure/obj
+
+.DS_Store
