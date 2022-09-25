@@ -15,9 +15,21 @@ public class RestaurantController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<RestaurantsResult>> ListAsync([FromQuery(Name = "search")] string? search)
+    public async Task<ActionResult<RestaurantsResult>> List([FromQuery(Name = "search")] string? search)
     {
         var restaurantsResult = await _restaurantService.ListAsync(search);
         return Ok(restaurantsResult);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<RestaurantResult>> GetById(Guid id)
+    {
+        var restaurantResult = await _restaurantService.GetAsync(id);
+        if (restaurantResult.data == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(restaurantResult);
     }
 }

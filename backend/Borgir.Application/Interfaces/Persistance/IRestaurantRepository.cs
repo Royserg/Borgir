@@ -6,4 +6,5 @@ namespace Borgir.Application.Interfaces.Persistance;
 public interface IRestaurantRepository
 {
     Task<List<Restaurant>> ListAsync([Optional] string search);
+    Task<Restaurant?> GetAsync(Guid id);
 }
