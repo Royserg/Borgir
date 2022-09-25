@@ -27,8 +27,17 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+// Initialize database connection, run migrations and seed data
+using (var scope = app.Services.CreateScope())
+{
+    var initializer = scope.ServiceProvider.GetRequiredService<DatabaseContextInitializer>();
+    await initializer.InitializeAsync();
+    await initializer.SeedAsync();
 }
 
 app.UseHttpsRedirection();
