@@ -11,3 +11,7 @@ export interface IRestaurant {
 export interface IGetRestaurants {
   items: IRestaurant[];
 }
+
+export interface IGetRestaurant {
+  data: IRestaurant;
+}
