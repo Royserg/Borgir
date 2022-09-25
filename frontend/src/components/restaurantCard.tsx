@@ -19,15 +19,18 @@ export const RestaurantCard = ({
           alt='Restaurant photo'
           width={250}
           height={200}
+          unoptimized
         />
       </figure>
       <div className='card-body'>
         <h2 className='card-title'>{name}</h2>
 
-        <p className='text-sm text-gray-500'>
-          {city}, {country}
+        <div className='text-sm text-gray-500 mb-auto'>
+          <p>
+            {city}, {country}
+          </p>
           <p className='text-gray-400'>{street}</p>
-        </p>
+        </div>
 
         <div className='card-actions justify-end'>
           <Link href={id}>
