@@ -50,4 +50,25 @@ internal sealed class RestaurantRepository : IRestaurantRepository
         ))
         .ToList();
     }
+
+    public async Task<Restaurant?> GetAsync(Guid id)
+    {
+        var restaurant = await _restaurants.FirstOrDefaultAsync(r => r.Id == id);
+
+        if (restaurant == null)
+        {
+            return null;
+        }
+
+        // Convert Model to Entity
+        return new Restaurant(
+            restaurant.Id,
+            restaurant.Name,
+            restaurant.ImageUrl,
+            restaurant.City,
+            restaurant.Country,
+            restaurant.Street,
+            restaurant.ZipCode
+        );
+    }
 }

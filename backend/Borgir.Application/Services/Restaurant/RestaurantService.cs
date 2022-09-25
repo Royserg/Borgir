@@ -12,9 +12,16 @@ public class RestaurantService : IRestaurantService
         _restaurantRepository = restaurantRepository;
     }
 
+
     public async Task<RestaurantsResult> ListAsync(string? search)
     {
         var restaurants = await _restaurantRepository.ListAsync(search);
         return new RestaurantsResult(restaurants);
+    }
+
+    public async Task<RestaurantResult> GetAsync(Guid id)
+    {
+        var restaurant = await _restaurantRepository.GetAsync(id);
+        return new RestaurantResult(restaurant);
     }
 }
