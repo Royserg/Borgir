@@ -22,6 +22,8 @@ public class RestaurantController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
     public async Task<ActionResult<RestaurantResult>> GetById(Guid id)
     {
         var restaurantResult = await _restaurantService.GetAsync(id);
