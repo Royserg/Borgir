@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { GiHamburger } from 'react-icons/gi';
+import { ImSpinner2 } from 'react-icons/im';
 import { RiEmotionSadLine } from 'react-icons/ri';
 import { RestaurantCard } from '../components/restaurantCard';
 import { useDebounce } from '../hooks/useDebounce';
@@ -13,10 +14,7 @@ import { IGetRestaurants, IRestaurant } from '../shared/interfaces/restaurant';
 
 const Home: NextPage = () => {
   const [results, setResults] = useState<{ items: IRestaurant[] }>();
-  const { isLoading, isError, isFetching, error, refetch } = useQuery<
-    IGetRestaurants,
-    AxiosError
-  >(
+  const { isFetching, refetch } = useQuery<IGetRestaurants, AxiosError>(
     ['restaurants'],
     async () => {
       const data = await getRestaurants(searchTerm);
@@ -35,7 +33,7 @@ const Home: NextPage = () => {
     if (debouncedSearchTerm) {
       refetch();
     } else {
-      setResults({ items: [] });
+      setResults(undefined);
     }
   }, [debouncedSearchTerm]);
 
@@ -92,28 +90,29 @@ const Home: NextPage = () => {
         {/* Divider */}
         <div className='mb-3'></div>
 
-        {results ? (
+        {/* Loading */}
+        {isFetching ? (
+          <ImSpinner2 className='text-5xl mx-auto' />
+        ) : (
           <>
-            {results.items?.length === 0 && searchTerm ? (
-              <h3 className='text-2xl mt-10 text-center w-1/2'>
-                <RiEmotionSadLine className='text-5xl mx-auto' />
-                <br />
-                No restaurants registered in the system for this search term
-              </h3>
-            ) : (
-              <ul>
-                {results.items.map((restaurant) => (
-                  <RestaurantCard key={restaurant.id} data={restaurant} />
-                ))}
-              </ul>
+            {results && (
+              <>
+                {results.items?.length === 0 && searchTerm ? (
+                  <h3 className='text-2xl mt-10 text-center w-1/2'>
+                    <RiEmotionSadLine className='text-5xl mx-auto' />
+                    <br />
+                    No restaurants registered in the system for this search term
+                  </h3>
+                ) : (
+                  <ul>
+                    {results.items.map((restaurant) => (
+                      <RestaurantCard key={restaurant.id} data={restaurant} />
+                    ))}
+                  </ul>
+                )}
+              </>
             )}
           </>
-        ) : isError ? (
-          <span>Error: {error.message}</span>
-        ) : isLoading && !isFetching ? (
-          <span>Not ready ...</span>
-        ) : (
-          <span>Loading...</span>
         )}
       </main>
     </>
