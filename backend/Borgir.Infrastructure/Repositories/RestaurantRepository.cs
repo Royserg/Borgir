@@ -17,10 +17,28 @@ internal sealed class RestaurantRepository : IRestaurantRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Restaurant>> ListAsync()
+    public async Task<List<Restaurant>> ListAsync(string? search)
     {
-        var restaurants = await _restaurants.ToListAsync();
+        var restaurants = new List<RestaurantModel>();
 
+        if (!string.IsNullOrEmpty(search))
+        {
+            var searchLower = search.ToLower();
+
+            restaurants = await _restaurants
+                .Where(
+                    r => r.City.ToLower().Contains(searchLower)
+                    || r.Country.ToLower().Contains(searchLower)
+                    || r.Name.ToLower().Contains(searchLower)
+                )
+                .ToListAsync();
+        }
+        else
+        {
+            restaurants = await _restaurants.ToListAsync();
+        }
+
+        // Convert Model to Entity
         return restaurants.Select(r => new Restaurant(
             r.Id,
             r.Name,

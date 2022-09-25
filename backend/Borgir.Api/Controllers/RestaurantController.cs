@@ -15,9 +15,9 @@ public class RestaurantController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<RestaurantsResult>> GetAsync()
+    public async Task<ActionResult<RestaurantsResult>> ListAsync([FromQuery(Name = "search")] string? search)
     {
-        var restaurantsResult = await _restaurantService.ListAsync();
+        var restaurantsResult = await _restaurantService.ListAsync(search);
         return Ok(restaurantsResult);
     }
 }
