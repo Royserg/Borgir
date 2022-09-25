@@ -1,1 +1,17 @@
 .vs
+.vscode
+/build/
+**/bin/
+**/obj/
+Debug/
+Release/
+
+Borgir.Api/bin
+Borgir.Appplication/bin
+Borgir.Domain/bin
+Borgir.Infrastructure/bin
+
+Borgir.Api/obj
+Borgir.Appplication/obj
+Borgir.Domain/obj
+Borgir.Infrastructure/obj
